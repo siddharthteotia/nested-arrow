@@ -316,34 +316,34 @@ public class TestNested {
     rootStructReader.setPosition(0);
     Assert.assertEquals(35, rootStructReader.reader("age").readInteger().intValue());
     Assert.assertEquals(100000, rootStructReader.reader("salary").readLong().longValue());
-    addressListReader.setPosition(0);
-    phoneListReader.setPosition(0);
-    for (int i = 0; i < 2; i++) {
-      addressListReader.next();
+    int i = 0;
+    while (addressListReader.next()) {
       Assert.assertEquals(1016 + i, addressStructReader.reader("apt").readInteger().intValue());
       Assert.assertEquals(94404 + i, addressStructReader.reader("zip").readInteger().intValue());
-      for (int j = 0; j < 3; j++) {
-        phoneListReader.next();
+      int j = 0;
+      while (phoneListReader.next()) {
         Assert.assertEquals(412482 + i + j, phoneStructReader.reader("phone-number").readInteger().intValue());
         Assert.assertEquals(j, phoneStructReader.reader("phone-type").readInteger().intValue());
+        j++;
       }
+      i++;
     }
 
     // Read ROW 2
     rootStructReader.setPosition(1);
     Assert.assertEquals(55, rootStructReader.reader("age").readInteger().intValue());
     Assert.assertEquals(200000, rootStructReader.reader("salary").readLong().longValue());
-    addressListReader.setPosition(1);
-    phoneListReader.setPosition(1);
-    for (int i = 0; i < 2; i++) {
-      addressListReader.next();
+    i = 0;
+    while (addressListReader.next()) {
       Assert.assertEquals(1020 + i, addressStructReader.reader("apt").readInteger().intValue());
       Assert.assertEquals(94402 + i, addressStructReader.reader("zip").readInteger().intValue());
-      for (int j = 0; j < 3; j++) {
-        phoneListReader.next();
+      int j = 0;
+      while (phoneListReader.next()) {
         Assert.assertEquals(100 + i + j, phoneStructReader.reader("phone-number").readInteger().intValue());
         Assert.assertEquals(j, phoneStructReader.reader("phone-type").readInteger().intValue());
+        j++;
       }
+      i++;
     }
 
     structColumn.close();
